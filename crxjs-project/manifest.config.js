@@ -10,7 +10,7 @@ export default defineManifest({
   },
   permissions: [
     'sidePanel',
-    'contentSettings',
+    'contentSettings', "activeTab", "scripting", "tabs"
   ],
   action: {
     default_icon: {
