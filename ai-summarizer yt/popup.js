@@ -1,27 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let [tab] =  chrome.tabs.query({ active: true, currentWindow: true });
-
-
-chrome.scripting.executeScript(
-    {
-        target: { tabId: tab.id },
-        func:()=>
-
-            document.title,
-        
-    },
-    (results) => {
-        if(results && results[0])
-        document.getElementById("title").textContent = results[0].result;
-    else
-        document.getElementById("title").textContent = "No title found";
+document.addEventListener("DOMContentLoaded", () => {
+  // Get the saved title from storage
+  chrome.storage.local.get("currentTitle", (data) => {
+    const titleDiv = document.getElementById("title");
+    if (data.currentTitle) {
+      titleDiv.textContent = data.currentTitle;
+    } else {
+      titleDiv.textContent = "No title found.";
     }
-
-);
-
-
-
-
+  });
 });
-
-
