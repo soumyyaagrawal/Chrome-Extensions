@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            width: 300px;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            background-color: rgb(238, 194, 128);
+
+        }
+        h1 {
+            font-size: 18px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input {
+            width: 100%;
+            height: 75px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>    
+</head>
+<body>
+    <h1>Notes App</h1>
+    <input type="text" id="notesinput" placeholder="make a note...">
+    <div id="notes"></div>
+    <button id="clr">Clear</button>
+    
+
+    <script src="popup.js"></script>
+</body>
+</html>
