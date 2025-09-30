@@ -3,46 +3,34 @@ function highlightWord(word) {
 
   const regex = new RegExp(word, "gi");
 
-  function walk(node) {
-    // Only work with text nodes
-    if (node.nodeType === 3) {
-      const matches = node.nodeValue.match(regex);
-      if (matches) {
-        const span = document.createElement("span");
-        span.innerHTML = node.nodeValue.replace(regex, (match) => {
-          return `<span style="background-color: yellow;">${match}</span>`;
-        });
-        node.replaceWith(...span.childNodes);
-      }
-    } else if (node.nodeType === 1 && node.tagName !== "SCRIPT" && node.tagName !== "STYLE") {
-      // Go deeper into child nodes
-      for (let i = 0; i < node.childNodes.length; i++) {
-        walk(node.childNodes[i]);
-      }
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+
+  while ((node = walker.nextNode())) {
+    if (regex.test(node.nodeValue)) {
+      const span = document.createElement("span");
+      span.innerHTML = node.nodeValue.replace(
+        regex,
+        `<span class="my-highlight" style="background-color: yellow;">$&</span>`
+      );
+      node.parentNode.replaceChild(span, node);
     }
   }
-
-  walk(document.body);
 }
 
-
-
-
-
 function removeHighlights() {
-  const highlights = document.querySelectorAll("span[style='background-color: yellow;']");
+  const highlights = document.querySelectorAll("span.my-highlight");
   highlights.forEach((span) => {
-    const parent = span.parentNode;
-    parent.replaceChild(document.createTextNode(span.innerText), span);
+    // Replace the <span> with just its text
+    span.replaceWith(span.textContent);
   });
 }
 
-// Listen for popup.js sending highlight request
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message) => {
   if (message.action === "highlight") {
     highlightWord(message.word);
   }
-    if (message.action === "removeHighlights") {
+  if (message.action === "removeHighlights") {
     removeHighlights();
   }
 });
