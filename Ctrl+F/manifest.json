@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Notes App",
+    "name": "Ctrl+f",
     "version": "1.0",
-    "description": "Take notes on any webpage",
+    "description": "Find text",
     "permissions": [
         "activeTab",
         "scripting",
