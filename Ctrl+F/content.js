@@ -20,9 +20,10 @@ function highlightWord(word) {
 
 function removeHighlights() {
   const highlights = document.querySelectorAll("span.my-highlight");
-  highlights.forEach((span) => {
-    // Replace the <span> with just its text
-    span.replaceWith(span.textContent);
+  highlights.forEach(span => {
+    const parent = span.parentNode;
+    parent.replaceChild(document.createTextNode(span.textContent), span);
+    parent.normalize(); // merge adjacent text nodes
   });
 }
 
