@@ -17,7 +17,7 @@ function highlightWord(word) {
     }
   }
 }
-
+ //now works to remove highlights
 function removeHighlights() {
   const highlights = document.querySelectorAll("span.my-highlight");
   highlights.forEach(span => {
